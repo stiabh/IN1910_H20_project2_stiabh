@@ -65,6 +65,18 @@ public:
         size += 1;
     }
 
+    // insert specific value at index
+    void insert(int val, int index) {
+        if (index > size) {
+            throw range_error("IndexError");
+        }
+        append(0);
+        for (int i=size-1; index<i; i--) {
+            data[i] = data[i-1];
+        }
+        data[index] = val;
+    }
+
     // pretty print list
     void print() {
         cout << "[";
@@ -107,12 +119,9 @@ void test_ArrayList() {
 
 int main() {
     // test_ArrayList();
-    ArrayList primes({2, 3, 5, 8, 11});
-    primes.print();
-    cout << primes[0] << endl;
-    cout << primes[2] << endl;
-    primes[2] = 4;
-    cout << primes[2] << endl;
-    primes.print();
+    ArrayList example({8, 7, 6, 5, 4, 3});
+    example.insert(0, 2);
+    example.print();
+    
     return 0;
 }
