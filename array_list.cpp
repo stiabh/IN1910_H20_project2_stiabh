@@ -10,7 +10,7 @@ private:
 
     void resize() {
         capacity = capacity * GROWTH_FACTOR;
-        int tmp* = new int[capacity];   // points to dynamic array
+        int *tmp = new int[capacity];   // points to new dynamic array
         for (int i=0; i<size; i++) {
             tmp[i] = data[i];
         }
@@ -30,11 +30,12 @@ public:
         delete[] data;      // destroys array
     }
 
-    // get length of array
+    // get length of list
     int length() {
         return size;
     }
 
+    // add integer to end of list
     void append(int n) {
         if (size >= capacity) {
             resize();
@@ -42,10 +43,30 @@ public:
         data[size] = n;
         size += 1;
     }
+
+    // pretty print list
+    void print() {
+        cout << "[";
+        if (size != 0) {
+            for (int i=0; i<size-1; i++) {
+                cout << data[i] << ", ";
+            }
+            cout << data[size-1];
+        }
+        cout << "]" << endl;
+    }
 };
 
 int main() {
     ArrayList list;
+    cout << list.length() << endl;
+    list.print();
+    list.append(2);
+    list.print();
+    list.append(4);
+    list.print();
+    list.append(6);
+    list.print();
     cout << list.length() << endl;
     return 0;
 }
