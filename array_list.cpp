@@ -15,7 +15,7 @@ private:
             tmp[i] = data[i];
         }
         delete[] data;      // destroys old array
-        data = tmp;
+        data = tmp;         // tmp is only defined within scope resize()
     }
 
 public:
@@ -57,16 +57,35 @@ public:
     }
 };
 
+// return true if integer is prime
+bool is_prime(int n) {
+    if (n <= 1) {
+        return false;
+    } else {
+        for (int i=2; i<n; i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+// test ArrayList by appending first 10 primes
+void test_ArrayList() {
+    ArrayList primes;
+    int n = 0;
+    while (primes.length() < 10) {
+        if (is_prime(n) == true) {
+            primes.append(n);
+        }
+        n += 1;
+    }
+    primes.print();
+}
+
 int main() {
-    ArrayList list;
-    cout << list.length() << endl;
-    list.print();
-    list.append(2);
-    list.print();
-    list.append(4);
-    list.print();
-    list.append(6);
-    list.print();
-    cout << list.length() << endl;
+    test_ArrayList();
+    
     return 0;
 }
