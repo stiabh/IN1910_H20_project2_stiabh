@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include <stdexcept>
 using namespace std;
 
 class ArrayList {
@@ -25,9 +27,28 @@ public:
         data = new int[capacity];   // allocates memory
     }
 
+    // allow initialized values
+    ArrayList(vector<int> vec) {
+        size = 0;
+        data = new int[capacity];
+
+        for (int i=0; i<vec.size(); i++) {
+            append(vec[i]);
+        }
+    }
+
     // destructor
     ~ArrayList() {
         delete[] data;      // destroys array
+    }
+
+    // overload square-bracketing operator
+    int& operator[](int i) {
+        if (i >= 0 and i < size) {
+            return data[i];
+        } else {
+            throw range_error("IndexError");
+        }
     }
 
     // get length of list
@@ -85,7 +106,13 @@ void test_ArrayList() {
 }
 
 int main() {
-    test_ArrayList();
-    
+    // test_ArrayList();
+    ArrayList primes({2, 3, 5, 8, 11});
+    primes.print();
+    cout << primes[0] << endl;
+    cout << primes[2] << endl;
+    primes[2] = 4;
+    cout << primes[2] << endl;
+    primes.print();
     return 0;
 }
