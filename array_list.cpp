@@ -102,6 +102,10 @@ public:
         }
 
         size -= 1;
+
+        if ((double) size/capacity < 0.25) {
+            shrink_to_fit();
+        }
     }
 
     // remove and return value at index 
@@ -117,13 +121,23 @@ public:
         }
         size -= 1;
 
+        if ((double) size/capacity < 0.25) {
+            shrink_to_fit();
+        }
+
         return val;
     }
 
     // remove and return last value
     int pop() {
         size -= 1;
-        return data[size];
+        int last_val = data[size];
+
+        if ((double) size/capacity < 0.25) {
+            shrink_to_fit();
+        }
+
+        return last_val;
     }
 
     // pretty print list
@@ -140,59 +154,56 @@ public:
 };
 
 // return true if integer is prime
-bool is_prime(int n) {
-    if (n <= 1) {
-        return false;
-    } else {
-        for (int i=2; i<n; i++) {
-            if (n % i == 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-}
+// bool is_prime(int n) {
+//     if (n <= 1) {
+//         return false;
+//     } else {
+//         for (int i=2; i<n; i++) {
+//             if (n % i == 0) {
+//                 return false;
+//             }
+//         }
+//         return true;
+//     }
+// }
 
 // test ArrayList by appending first 10 primes
-void test_ArrayList() {
-    ArrayList primes;
-    int n = 0;
-    while (primes.length() < 10) {
-        if (is_prime(n) == true) {
-            primes.append(n);
-        }
-        n += 1;
-    }
-    primes.print();
-}
+// void test_ArrayList() {
+//     ArrayList primes;
+//     int n = 0;
+//     while (primes.length() < 10) {
+//         if (is_prime(n) == true) {
+//             primes.append(n);
+//         }
+//         n += 1;
+//     }
+//     primes.print();
+// }
 
 // will only work if all attributes are public
-void test_shrink_to_fit() {
-    ArrayList largelist;
-    for (int i=0; i<1000; i++) {
-        largelist.append(i);
-    }
+// void test_shrink_to_fit() {
+//     ArrayList largelist;
+//     for (int i=0; i<1000; i++) {
+//         largelist.append(i);
+//     }
 
-    cout << "Length before: " << largelist.length() << endl;
+//     cout << "Length before: " << largelist.length() << endl;
     
-    for (int i=30; i<901; i++) {
-        largelist.remove(30);
-    }
+//     for (int i=30; i<901; i++) {
+//         largelist.remove(30);
+//     }
 
-    cout << "Length after: " << largelist.length() << endl;
-    cout << "Actual capacity: " << largelist.capacity << endl;
-    largelist.print();
+//     cout << "Length after: " << largelist.length() << endl;
+//     cout << "Actual capacity: " << largelist.capacity << endl;
+//     largelist.print();
 
-    largelist.shrink_to_fit();
+//     largelist.shrink_to_fit();
 
-    largelist.print();
-    cout << "Actual capacity: " << largelist.capacity << endl;
+//     largelist.print();
+//     cout << "Actual capacity: " << largelist.capacity << endl;
 
-}
+// }
 
 int main() {
-    // test_ArrayList();
-    // test_shrink_to_fit();
-
     return 0;
 }
