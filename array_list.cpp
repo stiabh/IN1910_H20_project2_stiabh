@@ -77,6 +77,39 @@ public:
         data[index] = val;
     }
 
+    // remove value at index
+    void remove(int index) {
+        if (index > size) {
+            throw range_error("IndexError");
+        }
+
+        for (int i=index; i<size-1; i++) {
+            data[i] = data[i+1];
+        }
+
+        size -= 1;
+    }
+
+    int pop(int index) {
+        if (index > size) {
+            throw range_error("IndexError");
+        }
+
+        int val = data[index];
+
+        for (int i=index; i<size-1; i++) {
+            data[i] = data[i+1];
+        }
+        size -= 1;
+
+        return val;
+    }
+
+    int pop() {
+        size -= 1;
+        return data[size];
+    }
+
     // pretty print list
     void print() {
         cout << "[";
@@ -120,8 +153,12 @@ void test_ArrayList() {
 int main() {
     // test_ArrayList();
     ArrayList example({8, 7, 6, 5, 4, 3});
-    example.insert(0, 2);
+    example.remove(2);
     example.print();
-    
+    example.pop(3);
+    example.print();
+    cout << example.pop() << endl;
+    example.print();
+    cout << example.length() << endl;
     return 0;
 }
