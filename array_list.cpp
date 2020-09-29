@@ -10,6 +10,7 @@ private:
     int capacity = 1;   // actual size of array
     const int GROWTH_FACTOR = 2;
 
+    // double array capacity
     void resize() {
         capacity = capacity * GROWTH_FACTOR;
         int *tmp = new int[capacity];   // points to new dynamic array
@@ -20,6 +21,19 @@ private:
         data = tmp;         // tmp is only defined within scope resize()
     }
 
+    // shrink array if capacity is unnecessarily high
+    void shrink_to_fit() {
+        int cap = 1;
+        while (cap < size) {
+            cap *= GROWTH_FACTOR;
+        }
+
+        if (cap < capacity) {
+            capacity = cap/2;   // since capacity is doubled in resize()
+            resize();
+        }
+    }
+
 public:
     // constructor
     ArrayList() {
@@ -27,7 +41,7 @@ public:
         data = new int[capacity];   // allocates memory
     }
 
-    // allow initialized values
+    // allow initialized values in constructor
     ArrayList(vector<int> vec) {
         size = 0;
         data = new int[capacity];
@@ -90,6 +104,7 @@ public:
         size -= 1;
     }
 
+    // remove and return value at index 
     int pop(int index) {
         if (index > size) {
             throw range_error("IndexError");
@@ -105,6 +120,7 @@ public:
         return val;
     }
 
+    // remove and return last value
     int pop() {
         size -= 1;
         return data[size];
@@ -150,15 +166,33 @@ void test_ArrayList() {
     primes.print();
 }
 
+// will only work if all attributes are public
+void test_shrink_to_fit() {
+    ArrayList largelist;
+    for (int i=0; i<1000; i++) {
+        largelist.append(i);
+    }
+
+    cout << "Length before: " << largelist.length() << endl;
+    
+    for (int i=30; i<901; i++) {
+        largelist.remove(30);
+    }
+
+    cout << "Length after: " << largelist.length() << endl;
+    cout << "Actual capacity: " << largelist.capacity << endl;
+    largelist.print();
+
+    largelist.shrink_to_fit();
+
+    largelist.print();
+    cout << "Actual capacity: " << largelist.capacity << endl;
+
+}
+
 int main() {
     // test_ArrayList();
-    ArrayList example({8, 7, 6, 5, 4, 3});
-    example.remove(2);
-    example.print();
-    example.pop(3);
-    example.print();
-    cout << example.pop() << endl;
-    example.print();
-    cout << example.length() << endl;
+    // test_shrink_to_fit();
+
     return 0;
 }
