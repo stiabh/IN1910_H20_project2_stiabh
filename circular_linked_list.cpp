@@ -25,6 +25,14 @@ public:
         size = 0;
     }
 
+    CircLinkedList(int n) {
+        head = nullptr;
+        size = 0;
+        for (int i=1; i<=n; i++) {
+            append(i);
+        }
+    }
+
     ~CircLinkedList() {
         Node* current = head;
         Node* next;
@@ -80,20 +88,11 @@ public:
 
 
 int main() {
-    CircLinkedList list;
-    for (int i=0; i<6; i++) {
-        list.append(i);
-    }
+    CircLinkedList list(6);
 
     for (int i=0; i<12; i++) {
         cout << list[i] << endl;
     }
-    
-    CircLinkedList clist;
-    clist.append(0);
-    clist.append(2);
-    clist.append(4);
-    clist.print();
 
     return 0;
 }
