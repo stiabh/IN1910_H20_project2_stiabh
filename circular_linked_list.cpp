@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 
 using namespace std;
 
@@ -34,6 +35,18 @@ public:
         }
     }
 
+    int& operator[](int index) {
+        if (size == 0) {
+            throw range_error("IndexError");
+        } else {
+            Node* current = head;
+            for (int i=0; i<index; i++) {
+                current = current->next;
+            }
+            return current->val;
+        }
+    } 
+
     void append(int val) {
         Node* current = head;
         if (size == 0) {
@@ -64,12 +77,13 @@ public:
 
 int main() {
     CircLinkedList list;
-    list.append(1);
-    list.append(2);
-    list.append(3);
-    list.append(3);
-    list.append(3);
-    list.append(3);
-    // list.print();
+    for (int i=0; i<6; i++) {
+        list.append(i);
+    }
+
+    for (int i=0; i<12; i++) {
+        cout << list[i] << endl;
+    }
+    
     return 0;
 }
