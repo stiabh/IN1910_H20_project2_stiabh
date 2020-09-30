@@ -51,6 +51,16 @@ public:
         size = 0;
     }
 
+    LinkedList(vector<int> vec) {
+        head = nullptr;
+        tail = nullptr;
+        size = 0;
+        
+        for (int i: vec) {
+            append(i);
+        }
+    }
+
     ~LinkedList() {
         Node* current = head;
         Node* next;
@@ -71,8 +81,10 @@ public:
     void insert(int val, int index) {
         if (index == 0) {
             push_front(val);
+
         } else if (index == size) {
             append(val);
+
         } else {
             Node* current = get_node(index-1);
             Node* after = current->next;
@@ -87,6 +99,7 @@ public:
         if (head == nullptr and tail == nullptr) {
             head = new Node(val);
             tail = head;    // head and tail point at same node
+
         } else {
             Node* old_head = head;
             head = new Node(val, nullptr, old_head);
@@ -100,12 +113,61 @@ public:
         if (head == nullptr and tail == nullptr) {
             head = new Node(val);
             tail = head;    // head and tail point at same node
+
         } else {
             Node* old_tail = tail;
             tail = new Node(val, old_tail, nullptr);
             old_tail->next = tail;
         }        
         size += 1;
+    }
+
+    // remove value at index
+    void remove(int index) {
+        Node* current = get_node(index);
+
+        if (current == head and current == tail) {
+            delete current;
+            head = nullptr;
+            tail = nullptr;
+
+        } else if (current == head) {
+            Node* new_head = head->next;
+            delete head;
+            head = new_head;
+            head->prev = nullptr;
+
+        } else if (current == tail) {
+            Node* new_tail = tail->prev;
+            delete tail;
+            tail = new_tail;
+            tail->next = nullptr;
+
+        } else {
+            Node* before = current->prev;
+            Node* after = current->next;
+            delete current;
+            before->next = after;
+            after->prev = before;
+        }
+        size -= 1;
+    }
+
+    // remove and return last value in list
+    int pop() {
+        int val;
+        if (tail != nullptr) {
+            val = tail->val;
+        }
+        remove(size-1);
+        return val;
+    }
+
+    // remove and return specific index
+    int pop(int index) {
+        int val = get_node(index)->val;
+        remove(index);
+        return val;
     }
 
     // return list length
@@ -141,12 +203,13 @@ public:
 
 
 int main() {
-    LinkedList list;
-    for (int i=0; i<10; i++) {
-        list.append(i);
-    }
+    LinkedList list({1, 2, 3});
+    // for (int i=0; i<10; i++) {
+    //     list.append(i*2);
+    // }
+    // list.append(0);
+    // cout << list.pop() << endl;
     list.print();
     cout << list.length() << endl;
-
     return 0;
 }
