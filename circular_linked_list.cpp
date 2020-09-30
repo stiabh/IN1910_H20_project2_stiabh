@@ -63,15 +63,19 @@ public:
         size += 1;
     }
 
-    // void print() {
-    //     Node* current = head;
-    //     cout << "[";
-    //     while (current->next != head) {
-    //         cout << current->val << ", ";
-    //         current = current->next;
-    //     }
-    //     cout << current->val << "]" << endl;
-    // }
+    void print() {
+        if (size == 0) {
+            cout << "[]" << endl;
+        } else {
+            Node* current = head;
+            cout << "[";
+            for (int i=0; i<size; i++) {
+                cout << current->val << ", ";
+                current = current->next;
+            }
+            cout << "...]" << endl;
+        }
+    }
 };
 
 
@@ -85,5 +89,11 @@ int main() {
         cout << list[i] << endl;
     }
     
+    CircLinkedList clist;
+    clist.append(0);
+    clist.append(2);
+    clist.append(4);
+    clist.print();
+
     return 0;
 }
