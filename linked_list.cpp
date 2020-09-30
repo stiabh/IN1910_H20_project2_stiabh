@@ -16,12 +16,6 @@ struct Node {
         next = nullptr;
     }
 
-    Node(int v, Node* p) {
-        val = v;
-        prev = p;
-        next = nullptr;
-    }
-
     Node(int v, Node* p, Node* n) {
         val = v;
         prev = p;
@@ -34,18 +28,17 @@ class LinkedList {
 private:
     Node* head;
     Node* tail;
+    int size;
 
+    // get index of node
     Node* get_node(int index) {
-        if (index > length()-1) {
+        if (index < 0 or index >= size) {
             throw range_error("IndexError");
         }
 
         Node* current = head;
-        int count = 0;
-
-        while (count < index) {
+        for (int i=0; i<index; i++) {
             current = current->next;
-            count += 1;
         }
 
         return current;
@@ -55,6 +48,7 @@ public:
     LinkedList() {
         head = nullptr;
         tail = nullptr;
+        size = 0;
     }
 
     ~LinkedList() {
@@ -68,50 +62,55 @@ public:
         }
     }
 
+    // override square-brackets operator
     int& operator[](int index) {
         return get_node(index)->val;
     }
 
-    // append integer to list
-    void append(int val) {
-        // empty list
+    // insert integer at specific index
+    void insert(int val, int index) {
+        if (index == 0) {
+            push_front(val);
+        } else if (index == size) {
+            append(val);
+        } else {
+            Node* current = get_node(index-1);
+            Node* after = current->next;
+            current->next = new Node(val, current, after);
+            after->prev = current->next;
+            size += 1;
+        }
+    }
+
+    // push integer to front of list
+    void push_front(int val) {
         if (head == nullptr and tail == nullptr) {
             head = new Node(val);
             tail = head;    // head and tail point at same node
-            return;
+        } else {
+            Node* old_head = head;
+            head = new Node(val, nullptr, old_head);
+            old_head->prev = head;
         }
-
-        Node* prev_tail = tail;
-        tail = new Node(val);
-
-        prev_tail->next = tail;
-        tail->prev = prev_tail;
+        size += 1;
     }
 
-    // insert integer at specific index
-    void insert(int val, int index) {
-        Node* current = get_node(index);
-
-        Node* prev = current->prev;
-        Node* next = current->next;
-        
-        current = new Node(val, prev, next);
-
-        prev->next = current;
-        next->prev = current;
+    // append integer to list
+    void append(int val) {
+        if (head == nullptr and tail == nullptr) {
+            head = new Node(val);
+            tail = head;    // head and tail point at same node
+        } else {
+            Node* old_tail = tail;
+            tail = new Node(val, old_tail, nullptr);
+            old_tail->next = tail;
+        }        
+        size += 1;
     }
 
     // return list length
     int length() {
-        int length = 0;
-        Node* current = head;
-
-        while (current != nullptr) {
-            length += 1;
-            current = current->next;
-        }
-
-        return length;
+        return size;
     }
 
     // pretty print list
@@ -119,37 +118,35 @@ public:
         // empty list
         if (head == nullptr and tail == nullptr) {
             cout << "[]" << endl;
-            return;
-        }
+        } else {
+            Node* current = head;
 
-        Node* current;
-        current = head;
-
-        cout << "[";
-        while (current->next != nullptr) {
-            cout << current->val << ", ";
-            current = current->next;
+            cout << "[";
+            while (current->next != nullptr) {
+                cout << current->val << ", ";
+                current = current->next;
+            }
+            cout << tail->val << "]" << endl;
         }
-        cout << tail->val << "]" << endl;
+    }
+
+    void test_backwards() {
+        Node* node = tail;
+        for (int i=0; i<size; i++) {
+            cout << node->val << endl;
+            node = node->prev;
+        }
     }
 };
 
 
 int main() {
     LinkedList list;
-    for (int i=0; i<5; i++) {
-        list.append(i+3);
-        list.print();
+    for (int i=0; i<10; i++) {
+        list.append(i);
     }
-    // list.append(2);
-    list.insert(99, 2);
     list.print();
+    cout << list.length() << endl;
 
-    // try {
-    //     cout << list[2] << endl;
-    // } catch (const std::range_error& e) {
-    //     cout << "Out of range error" << endl;
-    // }
-    
     return 0;
 }
