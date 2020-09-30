@@ -192,24 +192,65 @@ public:
         }
     }
 
-    void test_backwards() {
+    // test to see if linking works properly
+    void test_print_backwards() {
         Node* node = tail;
-        for (int i=0; i<size; i++) {
-            cout << node->val << endl;
+        cout << "[";
+        for (int i=0; i<size-1; i++) {
+            cout << node->val << ", ";
             node = node->prev;
         }
+        cout << node->val << "]" << endl;
     }
 };
 
+void test_LinkedList() {
+    cout << endl;
+
+    cout << "Initializing list with vector as input:" << endl;
+    LinkedList list({1, 2, 3, 4, 5, 6});
+    list.print();
+    cout << endl;
+
+    cout << "Test method to confirm that backwards linking works:" << endl;
+    list.test_print_backwards();
+    cout << endl;
+
+    cout << "Append works:" << endl;
+    for (int i=0; i<10; i++) {
+        list.append(i*2);
+    }
+    list.print();
+    cout << "Length: " << list.length() << endl;
+    cout << endl;
+
+    cout << "Indexing works:" << endl;
+    cout << "list[5] = " << list[5] << endl;
+    cout << endl;
+
+    cout << "Inserting 20 at index 8:" << endl;
+    list.insert(20, 8);
+    list.print();
+    cout << "Length: " << list.length() << endl;
+    cout << endl;
+
+    cout << "Remove parts of list using for loop:" << endl;
+    for (int i=4; i<10; i++) {
+        list.remove(i);
+    }
+    list.print();
+    cout << "Length: " << list.length() << endl;
+    cout << endl;
+
+    cout << "Pop last value:" << endl;
+    cout << "list.pop() returns " << list.pop() << endl;
+    list.print();
+
+    cout << endl;
+}
 
 int main() {
-    LinkedList list({1, 2, 3});
-    // for (int i=0; i<10; i++) {
-    //     list.append(i*2);
-    // }
-    // list.append(0);
-    // cout << list.pop() << endl;
-    list.print();
-    cout << list.length() << endl;
+    test_LinkedList();
+
     return 0;
 }
