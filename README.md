@@ -1,4 +1,4 @@
-# IN1910 &#150; Project 2
+# IN1910 – Project 2
 *Stian Berg Hansen*  
 
 Completed every exercise. Using Ubuntu 20.04 through WSL. Compiled and run with following command:  
@@ -6,17 +6,12 @@ Completed every exercise. Using Ubuntu 20.04 through WSL. Compiled and run with 
 
 https://github.uio.no/IN1910/H20_project2_stiabh  
 
-&nbsp;
-
 ## Part 3: Big-O analysis
-
-&nbsp;
-
 ### array_list.cpp
 
 | Operation | Cost | Explanation |
 |-|-|-|
-| Get element i by index | O(1) | Every element is stored   contiguously in memory, therefore not dependent on array size |
+| Get element i by index | O(1) | Every element is stored   contiguously in memory, therefore not dependent on array size. |
 | Insert at front | O(n)* | No specific method, but would   work the same way as insert(). Entire array is shifted. Sometimes resizing   will be necessary, which is why the cost is amortized. |
 | Insert at back (aka append) | O(1)* | Constant cost, assigns value to   memory block after "size". Resizing sometimes necessary. |
 | Insert into middle of list | O(n)* | Shifts array, cost can also be   written as O(n-i). Resizing sometimes necessary. |
@@ -24,8 +19,6 @@ https://github.uio.no/IN1910/H20_project2_stiabh
 | Remove element from back | O(1)* | Assuming pop() is used.   Amortized cost as array will be resized if size/capacity < .25. |
 | Remove element from middle | O(n)* | See explanation for removing   from front. |
 | Print | O(n) | Iterates over array until entry   number "size" is reached. |
-
-&nbsp;
 
 ### linked_list.cpp
 
@@ -40,10 +33,7 @@ https://github.uio.no/IN1910/H20_project2_stiabh
 | Remove element from middle | O(n) | Same explanation as get element i by index. |
 | Print | O(n) | Iterates over every element in chain. |
 
-&nbsp;
-
 ## Part 4: Circularly Linked List
-
 ### Exercise 4g)
 
 If *n* = 68 and *k* = 7, then the last man standing will be number 68. Found by running `last_man_standing(68, 7)`.
