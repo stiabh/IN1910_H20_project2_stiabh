@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <stdexcept>
 
 using namespace std;
@@ -84,15 +85,55 @@ public:
             cout << "...]" << endl;
         }
     }
+
+    vector<int> josephus_sequence(int k) {
+        vector<int> removed_values;
+        Node* current = head;
+        int i = 1;
+
+        while (size != 0) {
+            // cout << current->val << endl;
+            if (i % (k-1) == 0) {
+                Node* removed = current->next;
+                Node* after_removed = removed->next;
+                current->next = after_removed;
+                removed_values.push_back(removed->val);
+                // cout << "*" << removed->val << endl;
+                delete removed;
+                size -= 1;
+            }
+            current = current->next;
+            i += 1;
+        }
+        return removed_values;
+    }
 };
+
+void print_vector(vector<int> vec) {
+    int n = vec.size();
+    cout << "[";
+    for (int i=0; i<n-1; i++) {
+        cout << vec[i] << ", ";
+    }
+    cout << vec[n-1] << "]" << endl;
+}
 
 
 int main() {
     CircLinkedList list(6);
 
-    for (int i=0; i<12; i++) {
-        cout << list[i] << endl;
-    }
+    cout << "Before:" << endl;
+    list.print();
+    cout << endl;
+
+    vector<int> rem_val = list.josephus_sequence(3);
+
+    cout << "After:" << endl;
+    list.print();
+    cout << endl;
+
+    cout << "Josephus sequence:" << endl;
+    print_vector(rem_val);
 
     return 0;
 }
