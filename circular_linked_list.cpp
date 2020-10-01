@@ -118,22 +118,15 @@ void print_vector(vector<int> vec) {
     cout << vec[n-1] << "]" << endl;
 }
 
+int last_man_standing(int n, int k) {
+    CircLinkedList list(n);
+    vector<int> vec = list.josephus_sequence(k);
+    return vec[vec.size()-1];
+}
+
 
 int main() {
-    CircLinkedList list(6);
-
-    cout << "Before:" << endl;
-    list.print();
-    cout << endl;
-
-    vector<int> rem_val = list.josephus_sequence(3);
-
-    cout << "After:" << endl;
-    list.print();
-    cout << endl;
-
-    cout << "Josephus sequence:" << endl;
-    print_vector(rem_val);
+    cout << last_man_standing(6, 3) << endl;
 
     return 0;
 }
