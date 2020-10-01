@@ -124,26 +124,24 @@ public:
 
     // remove value at index
     void remove(int index) {
-        Node* current = get_node(index);
-
-        if (current == head and current == tail) {
-            delete current;
-            head = nullptr;
-            tail = nullptr;
-
-        } else if (current == head) {
-            Node* new_head = head->next;
-            delete head;
-            head = new_head;
-            head->prev = nullptr;
-
-        } else if (current == tail) {
+        if (index == 0) {
+            if (head == tail) {
+                delete head;
+                head = nullptr;
+                tail = nullptr;
+            } else {
+                Node* new_head = head->next;
+                delete head;
+                head = new_head;
+                head->prev = nullptr;
+            }
+        } else if (index == (size-1)) {
             Node* new_tail = tail->prev;
             delete tail;
             tail = new_tail;
             tail->next = nullptr;
-
         } else {
+            Node* current = get_node(index);
             Node* before = current->prev;
             Node* after = current->next;
             delete current;
