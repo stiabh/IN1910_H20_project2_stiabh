@@ -126,7 +126,7 @@ int last_man_standing(int n, int k) {
 
 
 int main() {
-    cout << last_man_standing(6, 3) << endl;
+    cout << last_man_standing(68, 7) << endl;
 
     return 0;
 }
