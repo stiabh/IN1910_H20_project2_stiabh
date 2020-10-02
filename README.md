@@ -4,6 +4,8 @@
 Completed every exercise. Using Ubuntu 20.04 through WSL. Compiled and run with following command:  
 `g++ <script_name>.cpp -o <script_name>.out -std=c++11 && ./<script_name>.out`  
 
+Scripts also compiled and run successfully on an IFI Linux machine through remote connection.  
+
 https://github.uio.no/IN1910/H20_project2_stiabh
 
 &nbsp;
