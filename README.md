@@ -6,7 +6,8 @@ Completed every exercise. Using Ubuntu 20.04 through WSL. Compiled and run with 
 
 Scripts also compiled and run successfully on an IFI Linux machine through remote connection.  
 
-https://pages.github.uio.no/IN1910/IN1910_H20/docs/projects/project2/project2.html
+~~https://pages.github.uio.no/IN1910/IN1910_H20/docs/projects/project2/project2.html~~
+https://pages.github.uio.no/IN1910/IN1910_H21/docs/projects/project2/project2.html
 
 &nbsp;
 
